@@ -24,8 +24,8 @@ class demo {
     require    => [
       Package['nginx'],
       Cs_property['no-quorum_policy'],
-      Cs_property['stonith-enabled'',
-      Cs_porperty['resource-stickiness']
+      Cs_property['stonith-enabled'],
+      Cs_property['resource-stickiness']
     ],
   }
 
