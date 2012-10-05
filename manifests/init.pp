@@ -4,6 +4,7 @@ class demo {
 
   class { 'corosync':
     enable_secauth    => true,
+    authkey           => '/var/lib/puppet/ssl/certs/ca.pem',
     bind_address      => $ipaddress,
     multicast_address => '239.1.1.2',
   }
