@@ -10,6 +10,7 @@ class demo {
   corosync::service { 'pacemaker':
     version => '0',
     notify  => Service['corosync'],
+    require => Class['corosync'],
   }
 
   Cs_property { require => Corosync::Service['pacemaker'], }
@@ -20,7 +21,12 @@ class demo {
 
   Cs_primitive {
     operations => { 'monitor' => '10s' },
-    require    => Package['nginx'],
+    require    => [
+      Package['nginx'],
+      Cs_property['no-quorum_policy'],
+      Cs_property['stonith-enabled'',
+      Cs_porperty['resource-stickiness']
+    ],
   }
 
   cs_primitive { 'nginx_vip':
@@ -34,7 +40,7 @@ class demo {
     primitive_class => 'lsb',
     primitive_type  => 'nginx',
     provided_by     => 'heartbeat',
-    require         => Cs_primitive['ca_vip'],
+    require         => Cs_primitive['nginx_vip'],
   }
 
   cs_group { 'ha_web':
