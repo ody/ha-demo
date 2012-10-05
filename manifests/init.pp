@@ -10,7 +10,6 @@ class demo {
   corosync::service { 'pacemaker':
     version => '0',
     notify  => Service['corosync'],
-    require => Class['corosync'],
   }
 
   Cs_property { require => Corosync::Service['pacemaker'], }
