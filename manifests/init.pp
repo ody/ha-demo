@@ -12,7 +12,7 @@ class demo {
   service { 'pacemaker':
     ensure  => stopped,
     enable  => false,
-    require => Class['corosync'],
+    require => Package['pacemaker'],
   }
 
   corosync::service { 'pacemaker':
