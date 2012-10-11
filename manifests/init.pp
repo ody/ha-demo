@@ -10,8 +10,9 @@ class demo {
   }
 
   service { 'pacemaker':
-    ensure => stopped,
-    enable => false,
+    ensure  => stopped,
+    enable  => false,
+    require => Class['corosync'],
   }
 
   corosync::service { 'pacemaker':
