@@ -8,9 +8,16 @@ class demo {
     bind_address      => $ipaddress,
     multicast_address => '239.1.1.2',
   }
+
+  service { 'pacemaker':
+    ensure => stopped,
+    enable => false,
+  }
+
   corosync::service { 'pacemaker':
     version => '0',
     notify  => Service['corosync'],
+    require => Service['pacemaker'],
   }
 
   Cs_property { require => Corosync::Service['pacemaker'], }
@@ -46,4 +53,6 @@ class demo {
   cs_group { 'ha_web':
     primitives => [ 'nginx_vip', 'nginx_service' ],
   }
+
+  include corosync::reprobe
 }
