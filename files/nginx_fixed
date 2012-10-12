@@ -46,7 +46,7 @@ END
 
 nginx_fixed_start() {
   /usr/sbin/service nginx start
-  if $? -eq 0; then
+  if [ $? -eq 0 ]; then
     return $OCF_SUCCESS
   else
     return $OCF_ERR_GENERIC
@@ -55,7 +55,7 @@ nginx_fixed_start() {
 
 nginx_fixed_stop() {
   /usr/sbin/service nginx stop
-  if $? -eq 0; then
+  if [ $? -eq 0 ]; then
     return $OCF_SUCCESS
   else
     return $OCF_ERR_GENERIC
@@ -64,7 +64,7 @@ nginx_fixed_stop() {
 
 nginx_fixed_monitor() {
   /usr/sbin/service nginx status
-  if $? -eq 0; then
+  if [ $? -eq 0 ]; then
     return $OCF_SUCCESS
   else
     return $OCF_NOT_RUNNING
