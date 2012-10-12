@@ -34,7 +34,7 @@ class demo {
 
   Cs_property { require => Corosync::Service['pacemaker'], }
 
-  cs_property { 'no-quorum_policy':    value => 'ignore', }
+  cs_property { 'no-quorum-policy':    value => 'ignore', }
   cs_property { 'stonith-enabled':     value => 'false', }
   cs_property { 'resource-stickiness': value => '100', }
 
