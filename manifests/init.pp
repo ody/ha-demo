@@ -28,7 +28,6 @@ class demo {
   cs_property { 'resource-stickiness': value => '100', }
 
   Cs_primitive {
-    operations => { 'monitor' => { 'interval' => '10s' } },
     require    => [
       Package['nginx'],
       Cs_property['no-quorum_policy'],
@@ -42,12 +41,17 @@ class demo {
     primitive_type  => 'IPaddr2',
     provided_by     => 'heartbeat',
     parameters      => { 'ip' => '172.16.210.100', 'cidr_netmask' => '32' },
+    operations      => { 'monitor' => { 'interval' => '10s' } },
   }
 
   cs_primitive { 'nginx_service':
     primitive_class => 'lsb',
     primitive_type  => 'nginx',
     provided_by     => 'heartbeat',
+    operations      => {
+      'monitor' => { 'interval' => '10s', 'timeout' => '30s' },
+      'start'   => { 'interval' => '0', 'timeout' => '30s', 'on-fail' => 'restart' }
+    },
     require         => Cs_primitive['nginx_vip'],
   }
 
