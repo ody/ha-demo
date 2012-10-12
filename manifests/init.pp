@@ -10,6 +10,16 @@ class demo {
     debug             => true,
   }
 
+  file { '/usr/lib/ocf/resource.d/pacemaker/nginx_fixed':
+    ensure  => file,
+    source  => "puppet:///modules/${module_name}/nginx_fixed",
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root',
+    require => Package['pacemaker', 'corosync'],
+    before  => Service['corosync'],
+  }
+
   service { 'pacemaker':
     ensure  => stopped,
     enable  => false,
