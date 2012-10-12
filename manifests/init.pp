@@ -28,7 +28,7 @@ class demo {
   cs_property { 'resource-stickiness': value => '100', }
 
   Cs_primitive {
-    operations => { 'monitor' => '10s' },
+    operations => { 'monitor' => { 'interval' => '10s' } },
     require    => [
       Package['nginx'],
       Cs_property['no-quorum_policy'],
