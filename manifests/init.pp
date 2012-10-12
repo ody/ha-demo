@@ -41,7 +41,7 @@ class demo {
   Cs_primitive {
     require    => [
       Package['nginx'],
-      Cs_property['no-quorum_policy'],
+      Cs_property['no-quorum-policy'],
       Cs_property['stonith-enabled'],
       Cs_property['resource-stickiness']
     ],
