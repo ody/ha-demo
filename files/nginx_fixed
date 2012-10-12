@@ -1,0 +1,94 @@
+#!/bin/bash
+#
+#
+# Generic OCF RA that wraps debian's broken nginx init script.
+#
+# Copyright (c) 2012 Puppet Labs, LLC, All Rights Reserved.
+#
+
+#######################################################################
+# Initialization:
+
+. ${OCF_ROOT}/resource.d/heartbeat/.ocf-shellfuncs
+
+#######################################################################
+
+meta_data() {
+  cat <<END
+<?xml version="1.0"?>
+<!DOCTYPE resource-agent SYSTEM "ra-api-1.dtd">
+<resource-agent name="nginx_fixed" version="0.0.1">
+<version>0.0.1</version>
+
+<longdesc lang="en">
+A functional nginx wrapper to init script.
+</longdesc>
+<shortdesc lang="en">Nginx OCF wrapper for Nginx</shortdesc>
+
+<actions>
+<action name="start"   timeout="600" />
+<action name="stop"    timeout="600" />
+<action name="monitor" timeout="20" interval="20" depth="0" />
+</actions>
+</resource-agent>
+END
+}
+
+#######################################################################
+
+nginx_fixed_usage() {
+cat <<END
+usage: $0 {start|stop|monitor|meta-data|usage|help}
+
+Expects to have a fully populated OCF RA-compliant environment set.
+END
+}
+
+nginx_fixed_start() {
+  /usr/bin/service nginx start
+  if $? -eq 0; then
+    return $OCF_SUCCESS
+  else
+    return $OCF_ERR_GENERIC
+  fi
+}
+
+nginx_fixed_stop() {
+  /usr/bin/service nginx stop
+  if $? -eq 0; then
+    return $OCF_SUCCESS
+  else
+    return $OCF_ERR_GENERIC
+  fi
+}
+
+nginx_fixed_monitor() {
+  /usr/bin/service nginx status
+  if $? -eq 0; then
+    return $OCF_SUCCESS
+  else
+    return $OCF_NOT_RUNNING
+  fi
+}
+
+_usage() {
+  nginx_fixed_usage
+}
+
+case $__OCF_ACTION in
+meta-data)	meta_data
+		exit $OCF_SUCCESS
+		;;
+start)		nginx_fixed_start;;
+stop)		nginx_fixed_stop;;
+monitor)        nginx_fixed_monitor;;
+usage|help)	nginx_fixed__usage
+		exit $OCF_SUCCESS
+		;;
+*)		nginx_fixed_usage
+		exit $OCF_ERR_UNIMPLEMENTED
+		;;
+esac
+rc=$?
+ocf_log debug "${OCF_RESOURCE_INSTANCE} $__OCF_ACTION : $rc"
+exit $rc
