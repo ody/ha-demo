@@ -51,7 +51,7 @@ class demo {
     primitive_class => 'ocf',
     primitive_type  => 'IPaddr2',
     provided_by     => 'heartbeat',
-    parameters      => { 'ip' => '172.16.210.100', 'cidr_netmask' => '32' },
+    parameters      => { 'ip' => '172.16.210.100', 'cidr_netmask' => '24' },
     operations      => { 'monitor' => { 'interval' => '10s' } },
   }
 
