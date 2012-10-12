@@ -56,9 +56,9 @@ class demo {
   }
 
   cs_primitive { 'nginx_service':
-    primitive_class => 'lsb',
-    primitive_type  => 'nginx',
-    provided_by     => 'heartbeat',
+    primitive_class => 'ocf',
+    primitive_type  => 'nginx_fixed',
+    provided_by     => 'pacemaker',
     operations      => {
       'monitor' => { 'interval' => '10s', 'timeout' => '30s' },
       'start'   => { 'interval' => '0', 'timeout' => '30s', 'on-fail' => 'restart' }
